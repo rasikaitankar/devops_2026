@@ -42,5 +42,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ec2-user/cicd-app
-            pkill -f 'java -jar' || true
+            ps -ef | grep 'java -jar' | grep -v grep | awk '{print $2}' | xargs -r kill -9
             nohup java -jar *.jar > app.log 2>&1 &
